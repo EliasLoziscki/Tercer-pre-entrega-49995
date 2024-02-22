@@ -1,0 +1,123 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: rgb(54, 54, 54);
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #d1d3d6;
+    margin: 20px;
+}
+
+.contenedor_realtime {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.div1, .div2 {
+    width: 45%;
+}
+
+@media (max-width: 768px) {
+    .div1, .div2 {
+        width: 100%;
+    }
+}
+
+form#addProductForm {
+    display: flex;
+    flex-direction: column;
+    justify-content:right;
+    gap: 5px;
+    width: 300px;
+    margin: 0;
+}
+
+form#addProductForm label {
+    font-weight: bold;
+}
+
+form#addProductForm input {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+form#addProductForm button {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #007BFF;
+    color: white;
+    cursor: pointer;
+}
+
+.navPage{
+    padding-top: 50px;
+}
+
+a:-webkit-any-link {
+    color: rgb(207, 155, 250);
+    font-size: 1.1rem ;
+    font-weight: 550;
+    text-decoration: none;
+}
+
+.product-card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.product-card {
+    flex: 0 0 30%;
+    min-width: 200px;
+    max-width: 400px;
+    margin: 1em;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column; 
+}
+
+.product-card > :last-child {
+    margin-top: auto;
+}
+
+.product-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.product-description {
+    margin-top: 10px;
+}
+
+.product-stock, .product-price {
+    margin-top: 5px;
+}
+
+.add-to-cart-button, button, input[type=submit] {
+    margin-top: 10px;
+    background-color: #008CBA;
+    color: white;
+    padding: 10px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.add-to-cart-button:hover {
+    background-color: white;
+    color: black;
+}
