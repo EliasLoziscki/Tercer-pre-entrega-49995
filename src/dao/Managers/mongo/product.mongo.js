@@ -1,9 +1,12 @@
-import productModel from "../models/products.model.js";
+import productModel from "../../models/products.model.js";
 
 class dbProductManager {
+  constructor() {
+    this.productModel = productModel;
+  }
   async getProducts() {
     try {
-      const products = await productModel.find();
+      const products = await this.productModel.find();
       return products;
     } catch (err) {
       console.error(err);
@@ -13,7 +16,7 @@ class dbProductManager {
 
   async createProduct(product) {
     try {
-      const newProduct = new productModel(product);
+      const newProduct = new this.productModel(product);
       await newProduct.save();
       return "Producto Agregado ";
     } catch (error) {
@@ -24,7 +27,7 @@ class dbProductManager {
 
   async getProductById(productId) {
     try {
-      const product = await productModel.findById(productId);
+      const product = await this.productModel.findById(productId);
       return product;
     } catch (error) {
       console.error("Error getting product:", error.message);
@@ -34,9 +37,7 @@ class dbProductManager {
 
   async updateProduct(id, updateProduct) {
     try {
-      const product = await productModel.findByIdAndUpdate(id, updateProduct, {
-        new: true,
-      });
+      const product = await this.productModel.findByIdAndUpdate(id, updateProduct, {new: true});
       return product
         ? "Producto actualizado correctamente."
         : "Product not found";
@@ -48,7 +49,7 @@ class dbProductManager {
 
   async deleteProduct(productId) {
     try {
-      const product = await productModel.findByIdAndDelete(productId);
+      const product = await this.productModel.findByIdAndDelete(productId);
       return product
         ? "Eliminación del producto exitosamente."
         : "Product not found";

@@ -1,17 +1,23 @@
-import dbMessageManager from "../dao/mongoManagers/dbMessageManager.js";
+import dbMessageManager from "../dao/Managers/mongo/message.mongo.js";
 
-const mongoMessageManager = new dbMessageManager();
+const messageManager = new dbMessageManager();
 
-
-const message = async (req, res) => { 
+class MessageController {
+  async createMessage(email, message) {
     try {
-        const { email, message } = req.body;
-        await mongoMessageManager.createMessage(email, message);
-        res.redirect("/");
+      const newMessage = await messageManager.createMessage(email, message);
+      return newMessage;
     } catch (error) {
-        console.error("Error creando mensaje:", error);
-        res.status(400).send({ error: error.toString() });
+      console.error("Error al crear el mensaje:", error);
+      throw error;
     }
+  }
+
+  async getMessages() {
+    return messageManager.getMessages();
+  }
 }
+
+const message = new MessageController();
 
 export { message };

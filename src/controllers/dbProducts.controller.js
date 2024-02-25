@@ -1,30 +1,29 @@
-import dbProductManager from "../dao/mongoManagers/dbProductManager.js";
+import dbProductManager from "../dao/Managers/mongo/product.mongo.js";
 
-const productManager = new dbProductManager();
-
+const productServicio = new dbProductManager();
 
 const getProductsAll = async (req, res) => {
-    try {
-        const product = await productManager.getProducts();
-    
-        res.send({
-          status: "success",
-          msg: "Productos del carrito",
-          carts: product,
-        });
-      } catch (error) {
-        console.error("que pasa", error);
-        res.send({
-          status: "error",
-          msg: "Error al obtener los carts",
-        });
-      }
+  try {
+    const product = await productServicio.getProducts();
+
+    res.send({
+      status: "success",
+      msg: "Productos del carrito",
+      carts: product,
+    });
+  } catch (error) {
+    console.error("que pasa", error);
+    res.send({
+      status: "error",
+      msg: "Error al obtener los carts",
+    });
+  }
 };
 
 const postCreateProduct = async (req, res) => {
   const product = req.body;
 
-  await productManager.createProduct(product);
+  await productServicio.createProduct(product);
 
   res.send({
     status: "success",
@@ -36,7 +35,7 @@ const postCreateProduct = async (req, res) => {
 const ProductById = async (req, res) => {
   const pid = req.params.pid;
   try {
-    const product = await productManager.getProductById(pid);
+    const product = await productServicio.getProductById(pid);
     res.send({
       status: "success",
       msg: `Ruta GET ID PRODUCTS con ID: ${pid}`,
@@ -55,7 +54,7 @@ const updateProductById = async (req, res) => {
   try {
     const pid = req.params.pid;
     const updatedProduct = req.body;
-    await productManager.updateProduct(pid, updatedProduct);
+    await productServicio.updateProduct(pid, updatedProduct);
     res.send({
       status: "success",
       msg: `Ruta PUT de PRODUCTS con ID: ${pid}`,
@@ -72,9 +71,9 @@ const updateProductById = async (req, res) => {
 const deleteProductById = async (req, res) => {
   try {
     const pid = req.params.pid;
-    const product = await productManager.getProductById(pid);
+    const product = await productServicio.getProductById(pid);
     const productTitle = product.title;
-    await productManager.deleteProduct(pid);
+    await productServicio.deleteProduct(pid);
     res.send({
       status: "success",
       msg: `Ruta DELETE de PRODUCTS con ID: ${pid}`,
@@ -89,10 +88,10 @@ const deleteProductById = async (req, res) => {
   }
 };
 
-export { 
+export {
   getProductsAll,
   postCreateProduct,
   ProductById,
   updateProductById,
-  deleteProductById
+  deleteProductById,
 };

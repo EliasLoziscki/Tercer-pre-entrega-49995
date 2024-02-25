@@ -7,7 +7,8 @@ class CartManagerFile {
     this.path = path.join(__dirname, `/files/${pathFile}`);
   }
 
-  async getCart() {//Obtiene todos los carritos del archivo carts.json
+  async getCart() {
+    //Obtiene todos los carritos del archivo carts.json
     try {
       if (fs.existsSync(this.path)) {
         const carts = JSON.parse(
@@ -16,7 +17,7 @@ class CartManagerFile {
         return carts;
       } else {
         console.error(`El archivo ${this.path} no existe.`);
-        return []; 
+        return [];
       }
     } catch (err) {
       console.error(err);
@@ -24,7 +25,8 @@ class CartManagerFile {
     }
   }
 
-  async createCart() {//Crea un carrito vacío y lo agrega al archivo carts.json 
+  async createCart() {
+    //Crea un carrito vacío y lo agrega al archivo carts.json
     try {
       const carts = await this.getCart();
       const lastCart = carts[carts.length - 1];
@@ -40,7 +42,8 @@ class CartManagerFile {
     }
   }
 
-  async getCartProducts(cid) {//La ruta lista los productos que pertenezcan al carrito con el parámetro cid proporcionado
+  async getCartProducts(cid) {
+    //La ruta lista los productos que pertenezcan al carrito con el parámetro cid proporcionado
     try {
       const carts = await fs.promises.readFile(this.path, "utf-8");
       const cartData = JSON.parse(carts);
@@ -57,7 +60,8 @@ class CartManagerFile {
     }
   }
 
-  async addProductToCart(cid, pid, quantity) {//esta ruta deberá agregar el producto al arreglo "products" del carrito seleccionado, agregándose como un objeto
+  async addProductToCart(cid, pid, quantity) {
+    //esta ruta deberá agregar el producto al arreglo "products" del carrito seleccionado, agregándose como un objeto
     try {
       const carts = await this.getCart();
       const cart = carts.find((cart) => Number(cart.id) === Number(cid));

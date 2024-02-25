@@ -1,6 +1,6 @@
-import dbCartManager from "../dao/mongoManagers/dbCartManager.js";
+import dbCartManager from "../dao/Managers/mongo/cart.mongo.js";
 import productModel from "../dao/models/products.model.js";
-import dbMessageManager from "../dao/mongoManagers/dbMessageManager.js";
+import dbMessageManager from "../dao/Managers/mongo/message.mongo.js";
 
 const cartManager = new dbCartManager();
 const MessageManager = new dbMessageManager();

@@ -1,19 +1,20 @@
 import express from "express";
-import mongoose from "mongoose";
+import { connectDB } from "./config/connectDB.js";
 import { engine } from "express-handlebars";
 import passport from "passport";
-import viewRouter from "./routes/views.routes.js";
 import __dirname from "./utils.js";
 import { Server } from "socket.io";
-import dbMessageManager from "./dao/mongoManagers/dbMessageManager.js";
 import session from "express-session";
 import MongoStore from "connect-mongo";
-import sessionRouter from "./routes/sessions.routes.js";
-import productModel from "./dao/models/products.model.js";
+import dbProductManager from "./dao/Managers/mongo/product.mongo.js";
 import inicializePassport from "./config/passport.config.js";
+import { message } from "./controllers/messages.controller.js";
+import sessionRouter from "./routes/sessions.routes.js";
+import viewRouter from "./routes/views.routes.js";
 import { dbProductRouter } from "./routes/dbProducts.routes.js";
 import { dbCartRouter } from "./routes/dbCarts.routes.js";
 import { config } from "./config/config.js";
+import cors from "cors";
 
 console.log(config);
 
@@ -21,11 +22,15 @@ const PORT = config.server.port;
 let messages = [];
 const app = express();
 
-const MONGO = config.mongo.url;
-const connection = mongoose.connect(MONGO);
+connectDB();
 
+//Para poder usar el body de las peticiones en formato json
 app.use(express.json());
+//Para poder usar el body de las peticiones en formato urlencoded (formularios). lo que hace es parsear el body de las peticiones y lo deja en req.body
 app.use(express.urlencoded({ extended: true }));
+//Para poder usar el cors en el servidor y poder hacer peticiones desde el front end al back end sin problemas de seguridad de cors (Cross Origin Resource Sharing)
+//app.use(cors());
+app.use(cors({ origin: "http://localhost:8080" }));
 
 const httpServer = app.listen(PORT, () =>
   console.log(`Servidor funcionando en el puerto: ${PORT}`)
@@ -34,7 +39,7 @@ const httpServer = app.listen(PORT, () =>
 app.use(
   session({
     store: new MongoStore({
-      mongoUrl: MONGO,
+      mongoUrl: config.mongo.url,
       ttl: 3600,
     }),
     secret: "CoderSecret",
@@ -59,16 +64,15 @@ inicializePassport();
 app.use(passport.initialize());
 app.use(passport.session());
 
-const mongoMessageManager = new dbMessageManager();
 
 io.on("connection", (socket) => {
   console.log("Cliente conectado");
 
   socket.on("createProduct", async (productData) => {
     try {
+      const productManager = new dbProductManager();
       console.log("Datos del producto recibidos en el servidor:", productData);
-      const newProduct = new productModel(productData);
-      await newProduct.save();
+      const newProduct = await productManager.createProduct(productData);
       io.emit("newProduct", productData);
     } catch (error) {
       console.error("Error al agregar producto:", error.message);
@@ -78,7 +82,7 @@ io.on("connection", (socket) => {
     messages.push(data);
     io.emit("messages", messages);
     try {
-      await mongoMessageManager.createMessage(data.email, data.message);
+      await message.createMessage(data.email, data.message);
     } catch (error) {
       console.error(
         "Error al guardar el mensaje en la base de datos:",
@@ -90,7 +94,7 @@ io.on("connection", (socket) => {
   socket.on("new-user", async (email) => {
     socket.broadcast.emit("new-user", email);
     try {
-      const messages = await mongoMessageManager.getMessages();
+      const messages = await message.getMessages();
       socket.emit("messages", messages);
     } catch (error) {
       console.error(

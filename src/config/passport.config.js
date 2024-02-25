@@ -1,13 +1,14 @@
 import passport from "passport";
 import local from "passport-local";
-import userModel from "../dao/models/Users.models.js";
+import Users from "../dao/Managers/mongo/user.mongo.js";
 import { createHash, validatePassword } from "../utils.js";
 import GitHubStrategy from "passport-github2";
-import dbCartManager from "../dao/mongoManagers/dbCartManager.js";
+import dbCartManager from "../dao/Managers/mongo/cart.mongo.js";
 import crypto from "crypto";
 
 const LocalStrategy = local.Strategy;
 const CartManager = new dbCartManager();
+const UsersManager = new Users();
 
 const inicializePassport = () => {
   passport.use(
@@ -17,7 +18,7 @@ const inicializePassport = () => {
       async (req, username, password, done) => {
         const { first_name, last_name, email, age } = req.body;
         try {
-          let user = await userModel.findOne({ email: username });
+          let user = await UsersManager.getBy({ email: username });
           if (user) {
             return done(null, false, { message: "Usuario ya se registro" });
           }
@@ -32,7 +33,7 @@ const inicializePassport = () => {
             password: createHash(password),
             rol: "user",
           };
-          const result = await userModel.create(newUser);
+          const result = await UsersManager.saveUser(newUser);
           return done(null, result);
         } catch (error) {
           return done(error);
@@ -47,7 +48,7 @@ const inicializePassport = () => {
       { usernameField: "email" },
       async (username, password, done) => {
         try {
-          const user = await userModel.findOne({ email: username });
+          const user = await UsersManager.getBy({ email: username });
           if (!user) {
             return done(null, false, { message: "Usuario no encontrado" });
           }
@@ -72,22 +73,20 @@ const inicializePassport = () => {
       },
       async (accessToken, refreshToken, profile, done) => {
         try {
-          let user = await userModel.findOne({
-            email: profile._json.login + "@github.com",
-          });
+          let user = await UsersManager.getBy({ email: profile._json.email });
           if (!user) {
             //Si el usuario no existe en la base de datos, se crea uno nuevo con los datos que se obtienen de github
             const cart = await CartManager.createCart();
             const newUser = {
               first_name: profile._json.name,
               last_name: "@github",
-              email: `${profile._json.login}@github.com`, //es lo único que se me ocurrió por el tema del required:true en el modelo
+              email: profile._json.email, //es lo único que se me ocurrió por el tema del required:true en el modelo
               age: 18,
               cart: cart._id,
               password: crypto.randomBytes(16).toString("hex"),
               rol: "user",
             };
-            let result = await userModel.create(newUser);
+            let result = await UsersManager.saveUser(newUser);
             return done(null, result);
           } else {
             //Si el usuario ya existe en la base de datos, se retorna el usuario encontrado en la base de datos y se loguea
@@ -105,7 +104,7 @@ const inicializePassport = () => {
   });
 
   passport.deserializeUser(async (id, done) => {
-    const user = await userModel.findById(id);
+    const user = await UsersManager.getById(id);
     done(null, user);
   });
 };

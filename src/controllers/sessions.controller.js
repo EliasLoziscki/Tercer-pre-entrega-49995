@@ -1,5 +1,7 @@
 import userModel from '../dao/models/Users.models.js';
 import { createHash } from "../utils.js";
+import { userService } from "../repository/index.js";
+
 
 const register = async (req, res) => {
     return res.status(200)
@@ -24,7 +26,6 @@ const login = async (req, res) => {
     req.session.user = {
         first_name: req.user.first_name,
         last_name: req.user.last_name,
-        full_name: req.user.first_name + " " + req.user.last_name,
         age: req.user.age,
         cart: req.user.cart,
         email: req.user.email,
@@ -35,7 +36,9 @@ const login = async (req, res) => {
 
 const current = async (req,res)=>{
     if(req.session.user){
-        res.send({status:"success", payload: req.session.user});
+        let user = await userService.getBy(req.session.user.email);
+        console.log(user)
+        res.send({status:"success", payload: user});
     }else{
         res.status(401).send({status:"error", message:"No hay sesión iniciada"});
     }
