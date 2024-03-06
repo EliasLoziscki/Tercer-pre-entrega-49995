@@ -24,19 +24,21 @@ const login = async (req, res) => {
         return res.status(400).send({status:error})
     }
     req.session.user = {
-        first_name: req.user.first_name,
-        last_name: req.user.last_name,
+        fullName: req.user.fullName,
+        name: req.user.name,
+        lastName: req.user.lastName,
         age: req.user.age,
         cart: req.user.cart,
         email: req.user.email,
         rol: req.user.rol
     }
+    console.log(req.session.user)
     res.send({status:"success", payload: req.user});
 }
 
 const current = async (req,res)=>{
     if(req.session.user){
-        let user = await userService.getBy(req.session.user.email);
+        let user = await userService.getByUserDto(req.session.user);
         console.log(user)
         res.send({status:"success", payload: user});
     }else{
@@ -56,7 +58,6 @@ const githubcallback = async (req, res) => {
     req.session.user = {
         first_name: req.user.first_name,
         last_name: req.user.last_name,
-        full_name: req.user.first_name + " " + req.user.last_name,
         age: req.user.age,
         cart: req.user.cart,
         email: req.user.email,

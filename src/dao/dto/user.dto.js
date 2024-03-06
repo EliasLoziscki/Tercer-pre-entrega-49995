@@ -11,11 +11,14 @@ export class CreateUserDto {
     }
 }
 
-export class GetUserDTO {
-    constructor(userDao) {
-        this.fullName = userDao.fullName;
-        this.email = userDao.email;
-        this.age = userDao.age;
-        this.rol = userDao.rol;
+export class GetUserDto {
+    constructor(userDto) {
+        this.fullName = `${userDto.name} ${userDto.lastName}`;
+        this.name = userDto.name;
+        this.lastName = userDto.lastName;
+        this.email = userDto.email;
+        this.age = userDto.age;
+        this.cart = userDto.cart;
+        this.rol = userDto.rol;
     }
 }

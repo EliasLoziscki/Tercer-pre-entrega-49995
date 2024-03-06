@@ -5,6 +5,8 @@ import { createHash, validatePassword } from "../utils.js";
 import GitHubStrategy from "passport-github2";
 import dbCartManager from "../dao/Managers/mongo/cart.mongo.js";
 import crypto from "crypto";
+import { userService } from "../repository/index.js";
+
 
 const LocalStrategy = local.Strategy;
 const CartManager = new dbCartManager();
@@ -33,7 +35,7 @@ const inicializePassport = () => {
             password: createHash(password),
             rol: "user",
           };
-          const result = await UsersManager.saveUser(newUser);
+          const result = await userService.createUser(newUser);
           return done(null, result);
         } catch (error) {
           return done(error);

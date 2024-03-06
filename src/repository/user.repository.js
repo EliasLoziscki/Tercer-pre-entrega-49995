@@ -1,23 +1,25 @@
-import { CreateUserDto, GetUserDTO } from "../dao/dto/user.dto.js";
+import { CreateUserDto, GetUserDto } from "../dao/dto/user.dto.js";
 
 export class UserRepository {
-    constructor(dao) {
-        this.dao = dao;
+    constructor(userDao) {
+        this.userDao = userDao;
     }
-    async getBy() {
-        const users = await this.dao.getBy();
+
+    async getUsers() {
+        const users = await this.userDao.get();
+        console.log(users)
         return users;
     }
-    async getBy(userId) {
-        try {
-            const user = await this.dao.getBy(userId);
-            const userDTO = new CreateUserDto(user);
-            const userDtoFront = new GetUserDTO(userDTO);
-            return userDtoFront;
-            
-        }catch(err){
-            throw new Error(`Error en el repositorio al buscar el usuario: ${err.message}`);
-        }
 
+    async createUser(user) {
+        const userDto = new CreateUserDto(user);
+        const userCreated = await this.userDao.saveUser(userDto);
+        return userCreated;
+    }
+    
+    async getByUserDto(params) {
+        const user = await this.userDao.getBy(params);
+        const userDtoFront = new GetUserDto(user);
+        return userDtoFront;
     }
 }

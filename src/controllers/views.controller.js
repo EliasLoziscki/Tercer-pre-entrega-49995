@@ -46,10 +46,7 @@ const profile = (req, res) => {
 const cartsCid = async (req, res) => {
   const cid = req.params.cid;
   try {
-    const cart = await cartManager
-      .getCartByID(cid)
-      .populate("products.product")
-      .lean();
+    const cart = await cartManager.getCartByID(cid)
     if (!cart) {
       throw new Error(`No se encontró el carrito con ID: ${cid}`);
     }

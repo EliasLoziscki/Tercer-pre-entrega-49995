@@ -15,13 +15,14 @@ class dbCartManager {
     }
   };
 
-  async getCartByID (id) {
+  async getCartByID(id) {
     try {
-      return await this.cartModel.find(id);
+        const cart = await cartModel.findById(id).populate("products.product").lean();
+        return cart;
     } catch (error) {
-      throw new Error(`Error al obtener el carrito: ${error.message}`);
+        throw new Error(`Error al obtener el carrito: ${error.message}`);
     }
-  };
+}
 
   async createCart () {
     try {
