@@ -8,7 +8,7 @@ class MessageController {
       const newMessage = await messageManager.createMessage(email, message);
       return newMessage;
     } catch (error) {
-      console.error("Error al crear el mensaje:", error);
+      req.logger.error("Error al crear el mensaje:", error);
       throw error;
     }
   }

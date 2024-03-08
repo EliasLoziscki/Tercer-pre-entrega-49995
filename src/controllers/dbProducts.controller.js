@@ -1,4 +1,5 @@
 import dbProductManager from "../dao/Managers/mongo/product.mongo.js";
+import { generateProducts } from "../utils.js";
 
 const productServicio = new dbProductManager();
 
@@ -12,7 +13,7 @@ const getProductsAll = async (req, res) => {
       carts: product,
     });
   } catch (error) {
-    console.error("que pasa", error);
+    req.logger.error("que pasa", error);
     res.send({
       status: "error",
       msg: "Error al obtener los carts",
@@ -42,7 +43,7 @@ const ProductById = async (req, res) => {
       producto: product,
     });
   } catch (error) {
-    console.error("Error al obtener el producto:", error);
+    req.logger.error("Error al obtener el producto:", error);
     res.send({
       status: "error",
       msg: "Error al obtener el producto",
@@ -60,7 +61,7 @@ const updateProductById = async (req, res) => {
       msg: `Ruta PUT de PRODUCTS con ID: ${pid}`,
     });
   } catch (error) {
-    console.error("Error al actualizar el producto:", error);
+    req.logger.error("Error al actualizar el producto:", error);
     res.send({
       status: "error",
       msg: "Error al actualizar el producto",
@@ -80,7 +81,7 @@ const deleteProductById = async (req, res) => {
       producto: productTitle,
     });
   } catch (error) {
-    console.error("Error al eliminar el producto:", error);
+    req.logger.error("Error al eliminar el producto:", error);
     res.send({
       status: "error",
       msg: "Error al eliminar el producto",
@@ -93,5 +94,5 @@ export {
   postCreateProduct,
   ProductById,
   updateProductById,
-  deleteProductById,
+  deleteProductById
 };

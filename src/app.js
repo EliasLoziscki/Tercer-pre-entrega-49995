@@ -15,6 +15,8 @@ import { dbProductRouter } from "./routes/dbProducts.routes.js";
 import { dbCartRouter } from "./routes/dbCarts.routes.js";
 import { config } from "./config/config.js";
 import cors from "cors";
+import { productsGenerateRouter } from "./routes/productsFaker.routes.js";
+import { addLogger } from "./utils/logger.js";
 
 console.log(config);
 
@@ -31,6 +33,8 @@ app.use(express.urlencoded({ extended: true }));
 //Para poder usar el cors en el servidor y poder hacer peticiones desde el front end al back end sin problemas de seguridad de cors (Cross Origin Resource Sharing)
 //app.use(cors());
 app.use(cors({ origin: "http://localhost:8080" }));
+//Para poder usar el logger en el servidor y poder ver las peticiones que llegan al servidor y los errores que se producen en el mismo (middleware).
+app.use(addLogger);
 
 const httpServer = app.listen(PORT, () =>
   console.log(`Servidor funcionando en el puerto: ${PORT}`)
@@ -60,10 +64,20 @@ app.use("/", viewRouter);
 app.use("/api/sessions", sessionRouter);
 app.use("/api/products", dbProductRouter);
 app.use("/api/carts", dbCartRouter);
+app.use("/mockingproducts", productsGenerateRouter);
 inicializePassport();
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.get("/loggerTest", (req, res) => {
+  req.logger.debug('debug');
+  req.logger.http('HTTP');
+  req.logger.info('info');
+  req.logger.warn('warning');
+  req.logger.error('error');
+  req.logger.fatal('fatal');
+  res.send(`Logger test`);
+});
 
 io.on("connection", (socket) => {
   console.log("Cliente conectado");

@@ -31,4 +31,9 @@ router.get("/logout", logout);
 //Si el usuario olvidó su contraseña, puede reiniciarla con esta ruta
 router.post("/restartPassword", restartPassword);
 
+router.get("/profile", (req,res)=>{
+    res.send(req.session.user )
+    console.log(req.session.user)
+});
+
 export default router;

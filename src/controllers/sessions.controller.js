@@ -32,14 +32,14 @@ const login = async (req, res) => {
         email: req.user.email,
         rol: req.user.rol
     }
-    console.log(req.session.user)
+    req.logger.info(req.session.user)
     res.send({status:"success", payload: req.user});
 }
 
 const current = async (req,res)=>{
     if(req.session.user){
         let user = await userService.getByUserDto(req.session.user);
-        console.log(user)
+        req.logger.info(user)
         res.send({status:"success", payload: user});
     }else{
         res.status(401).send({status:"error", message:"No hay sesión iniciada"});
@@ -63,7 +63,7 @@ const githubcallback = async (req, res) => {
         email: req.user.email,
         rol: req.user.rol
     }
-    console.log(req.session.user)
+    req.logger.info(req.session.user)
     res.redirect("/products");
 }
 

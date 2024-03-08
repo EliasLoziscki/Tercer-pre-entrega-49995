@@ -11,7 +11,7 @@ const postCreateCarts = async (req, res) => {
       producto: cart,
     });
   } catch (error) {
-    console.error("Error al crear el cart:", error);
+    req.logger.error("Error al crear el cart:", error);
     res.send({
       status: "error",
       msg: "Error al crear el cart",
@@ -29,7 +29,7 @@ const getCartsAll = async (req, res) => {
       carts: carts,
     });
   } catch (error) {
-    console.error("Error al obtener los carts:", error);
+    req.logger.error("Error al obtener los carts:", error);
     res.send({
       status: "error",
       msg: "Error al obtener los carts",
@@ -47,7 +47,7 @@ const cartByID = async (req, res) => {
       producto: cart,
     });
   } catch (error) {
-    console.error("Error al obtener el cart:", error);
+    req.logger.error("Error al obtener el cart:", error);
     res.send({
       status: "error",
       msg: `Error al obtener el cart con ID: ${cid}`,
@@ -67,7 +67,7 @@ const postAddProductToCart = async (req, res) => {
       producto: cart,
     });
   } catch (error) {
-    console.error("Error al agregar el producto al carrito:", error);
+    req.logger.error("Error al agregar el producto al carrito:", error);
     res.send({
       status: "error",
       msg: "Error al agregar el producto al carrito",
@@ -86,7 +86,7 @@ const updateCartId = async (req, res) => {
       producto: cart,
     });
   } catch (error) {
-    console.error("Error al actualizar el cart:", error);
+    req.logger.error("Error al actualizar el cart:", error);
     res.send({
       status: "error",
       msg: `Error al actualizar el cart con ID: ${cid}`,
@@ -106,7 +106,7 @@ const updateCartIdByProduct = async (req, res) => {
       producto: cart,
     });
   } catch (error) {
-    console.error("Error al actualizar el cart:", error);
+    req.logger.error("Error al actualizar el cart:", error);
     res.send({
       status: "error",
       msg: `Error al actualizar el cart con ID: ${cid} y el producto con ID: ${pid}`,
@@ -124,7 +124,7 @@ const deleteCartById = async (req, res) => {
       producto: cart,
     });
   } catch (error) {
-    console.error("Error al eliminar el cart:", error);
+    req.logger.error("Error al eliminar el cart:", error);
     res.send({
       status: "error",
       msg: `Error al eliminar el cart con ID: ${cid}`,
@@ -145,7 +145,7 @@ const deleteProductItCartById = async (req, res) => {
       producto: cart,
     });
   } catch (error) {
-    console.error("Error al eliminar el cart:", error);
+    req.logger.error("Error al eliminar el cart:", error);
     res.send({
       status: "error",
       msg: `Error al eliminar el cart con ID: ${cid}`,

@@ -10,7 +10,7 @@ const home = async (req, res) => {
     const products = await productModel.find().lean();
     res.render("home", { products, style: "index" });
   } catch (error) {
-    console.error("Error al obtener productos:", error);
+    req.logger.error("Error al obtener productos:", error);
     res.send({
       status: "error",
       msg: "Error al obtener productos",
@@ -23,7 +23,7 @@ const realtimeproducts = async (req, res) => {
     const products = await productModel.find().lean();
     res.render("realtimeproducts", { products, style: "index" });
   } catch (error) {
-    console.error("Error al obtener productos en tiempo real:", error);
+    req.logger.error("Error al obtener productos en tiempo real:", error);
     res.send({
       status: "error",
       msg: "Error al obtener productos en tiempo real",
@@ -53,7 +53,7 @@ const cartsCid = async (req, res) => {
 
     res.render("cartId", { cart, style: "index" });
   } catch (error) {
-    console.error("Error al obtener el cart:", error);
+    req.logger.error("Error al obtener el cart:", error);
     res.send({
       status: "error",
       msg: `Error al obtener el cart con ID: ${cid}`,
@@ -87,7 +87,7 @@ const products = async (req, res) => {
       style: "index",
     });
   } catch (error) {
-    console.error("Error al obtener los productos:", error);
+    req.logger.error("Error al obtener los productos:", error);
     res.send({
       status: "error",
       msg: "Error al obtener los productos",
