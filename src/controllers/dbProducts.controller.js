@@ -30,7 +30,7 @@ const postCreateProduct = async (req, res) => {
   });
 };
 
-const ProductById = async (req, res) => {
+const productById = async (req, res) => {
   const pid = req.params.pid;
   try {
     const product = await productService.getProductById(pid);
@@ -71,7 +71,7 @@ const deleteProductById = async (req, res) => {
     const pid = req.params.pid;
     const product = await productService.getProductById(pid);
     const productTitle = product.title;
-    await productServicio.deleteProduct(pid);
+    await productService.deleteProduct(pid);
     res.send({
       status: "success",
       msg: `Ruta DELETE de PRODUCTS con ID: ${pid}`,
@@ -89,7 +89,7 @@ const deleteProductById = async (req, res) => {
 export {
   getProductsAll,
   postCreateProduct,
-  ProductById,
+  productById,
   updateProductById,
   deleteProductById
 };

@@ -1,5 +1,5 @@
 import express from "express";
-import { ProductById, deleteProductById, getProductsAll, postCreateProduct, updateProductById } from "../controllers/dbProducts.controller.js";
+import { productById, deleteProductById, getProductsAll, postCreateProduct, updateProductById } from "../controllers/dbProducts.controller.js";
 import { checkRole } from "../middlewares/auth.js";
 
 const router = express.Router();
@@ -11,12 +11,12 @@ router.get("/", getProductsAll);
 router.post("/", checkRole(["admin"]), postCreateProduct);
 
 //Traer un producto por su id 
-router.get("/:pid", ProductById);
+router.get("/:pid", productById);
 
 //Actualizar un producto por su id 
 router.put("/:pid", checkRole(["admin"]), updateProductById);
 
 //Eliminar un producto por su id 
-router.delete("/:pid", checkRole(["admin"]), deleteProductById);
+router.delete("/:pid", deleteProductById);
 
 export { router as dbProductRouter };

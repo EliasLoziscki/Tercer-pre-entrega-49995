@@ -11,7 +11,7 @@ export class ProductRepository {
     }
 
     async getProductById(id) {
-        const product = await this.productDao.getById(id);
+        const product = await this.productDao.getProductById(id);
         const productDto = new GetProductDto(product);
         return productDto;
     }

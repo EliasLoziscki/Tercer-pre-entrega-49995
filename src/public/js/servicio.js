@@ -42,4 +42,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let totalElement = document.getElementById('total');
     totalElement.textContent = total === 0 ? 'Carrito vacío' : `El total es: ${total.toFixed(2)}`;
+
+});
+
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    const deleteProduct = document.querySelectorAll('.delete-product');
+    deleteProduct.forEach((button) => {
+        button.addEventListener('click', function() {
+            const productId = this.getAttribute('data-product-pid');
+            fetch(`/api/products/${productId}`, { method: 'DELETE' })
+            .then(data => {
+                    if(data.ok) {
+                        Toastify({
+                            text: "Producto eliminado",
+                            duration: 3000
+                        }).showToast();
+                        location.reload();
+                    }
+                })
+                .then(response => response.json())
+                .catch(error => console.log(error));
+        });
+    });
 });

@@ -50,9 +50,14 @@
 
     <div class="cont2">
         <h2>Lista de Productos</h2>
-        <ul id="products-list">
+        <ul id="products-list-real">
             {{#each products}}
-                <p>{{this.title}} - ${{this.price}} - Stock: {{this.stock}} - Code: {{this.code}} </p>
+                <div class="product-list-real">
+                    <div class="product-info-real">
+                        <p>{{this.title}} - ${{this.price}} - Stock: {{this.stock}} - Code: {{this.code}}</p>
+                    </div>
+                    <button class="delete-product" data-product-pid="{{this._id}}">X</button>
+                </div>
             {{/each}}
         </ul>
     </div>

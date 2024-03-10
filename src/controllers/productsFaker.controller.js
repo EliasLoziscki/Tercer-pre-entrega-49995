@@ -1,12 +1,13 @@
 import { generateProducts } from "../utils.js";
+import { productService } from "../repository/index.js";
 
 export const postCreateProductFaker = async (req, res) => {
     try {
       const products = generateProducts();
-      const maxProducts = 10;
+      const maxProducts = 50;
       for (let i = 0; i < maxProducts; i++) {
         req.logger.info(products[i])
-        await productServicio.createProduct(products[i]);
+        await productService.createProduct(products[i]);
       }
       res.send({
         status: "success",
