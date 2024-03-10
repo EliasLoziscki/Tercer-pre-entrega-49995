@@ -7,7 +7,7 @@ const router = express.Router();
 router.post("/", postCreateCarts);
 
 //Traer todos los carritos de la base de datos 
-router.get("/", getCartsAll);
+router.get("/", checkRole(["admin"]), getCartsAll);
 
 //Traer un carrito por su id 
 router.get("/:cid", cartByID);
@@ -22,7 +22,7 @@ router.put("/:cid", updateCartId);
 router.put("/:cid/products/:pid", updateCartIdByProduct);
 
 //Eliminar un carrito por su id
-router.delete("/:cid", deleteCartById);
+router.delete("/:cid", checkRole(["admin"]), deleteCartById);
 
 //Eliminar un producto de un carrito por su id
 router.delete("/:cid/products/:pid", deleteProductItCartById);

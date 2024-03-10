@@ -17,6 +17,6 @@ router.get("/:pid", productById);
 router.put("/:pid", checkRole(["admin"]), updateProductById);
 
 //Eliminar un producto por su id 
-router.delete("/:pid", deleteProductById);
+router.delete("/:pid", checkRole(["admin"]), deleteProductById);
 
 export { router as dbProductRouter };
