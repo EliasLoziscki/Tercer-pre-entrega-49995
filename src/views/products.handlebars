@@ -5,7 +5,12 @@
         <p>Bienvenido {{user.rol}}: {{user.fullName}}</p>
         <p>Mail: {{user.email}}</p>
         <p>Edad: {{user.age}}</p>
+        
         <a href="/api/sessions/logout"><button>Salir</button></a>
+    </div>
+
+    <div class="cart-button">
+        <a href="/carts/{{user.cart}}"><button>Carrito</button></a>
     </div>
 
     <div class="product-card-container">
@@ -16,7 +21,8 @@
                 <p class="product-category">Categoría: {{this.category}}</p>
                 <p class="product-stock">Stock: {{this.stock}}</p>
                 <p class="product-price">${{this.price}}</p>
-                <button class="add-to-cart-button">Agregar al carrito</button>
+                <button class="add-to-cart" data-product-id="{{this._id}}" data-cart-id="{{../user.cart}}">Agregar al carrito</button>
+                
             </div>
         {{/each}}
     </div>

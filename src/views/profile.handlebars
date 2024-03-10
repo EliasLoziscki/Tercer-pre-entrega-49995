@@ -1,7 +1,10 @@
-<div>
-    <h1>Tu perfil</h1>
-    <p>Nombre y apellido: {{user.fullName}}</p>
-    <p>Mail: {{user.email}}</p>
-    <p>Rol: {{user.rol}}</p>
-    <a href="/api/sessions/logout"><button>Salir</button></a>
-</div>
+<main>
+    <div>
+        <h1>Tu perfil</h1>
+        <p>Nombre y apellido: {{user.fullName}}</p>
+        <p>Mail: {{user.email}}</p>
+        <p>Rol: {{user.rol}}</p>
+        <p><a href="/resetPassword">Cambiar contraseña</a></p>
+        <a href="/api/sessions/logout"><button>Salir</button></a>
+    </div>
+</main>

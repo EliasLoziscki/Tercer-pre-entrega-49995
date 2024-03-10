@@ -3,30 +3,46 @@
         <h1>Agregar Nuevo Producto</h1>
 
         <form id="addProductForm">
-            <label for="title">Título:</label>
-            <input type="text" id="title" name="title" required>
+            <div class="input-group">
+                <label for="title">Título:</label>
+                <input type="text" id="title" name="title" required>
+            </div>
 
-            <label for="price">Precio:</label>
-            <input type="number" id="price" name="price" required>
+            <div class="input-group">
+                <label for="price">Precio:</label>
+                <input type="number" id="price" name="price" required>
+            </div>
 
-            <label for="stock">Stock:</label>
-            <input type="number" id="stock" name="stock" required>
+            <div class="input-group">
+                <label for="stock">Stock:</label>
+                <input type="number" id="stock" name="stock" required>
+            </div>
 
-            <label for="description">Descripción:</label>
-            <input type="text" id="description" name="description" required>
+            <div class="input-group">
+                <label for="description">Descripción:</label>
+                <input type="text" id="description" name="description" required>
+            </div>
 
-            <label for="thumbnail">Thumbnail:</label>
-            <input type="text" id="thumbnail" name="thumbnail">
+            <div class="input-group">
+                <label for="thumbnail">Thumbnail:</label>
+                <input type="text" id="thumbnail" name="thumbnail">
+            </div>
 
-            <label for="code">Código:</label>
-            <input type="text" id="code" name="code" required>
+            <div class="input-group">
+                <label for="code">Código:</label>
+                <input type="text" id="code" name="code" required>
+            </div>
 
-            <label for="status">Estado:</label>
-            <input type="text" id="status" value="true" name="status" readonly>
+            <div class="input-group">
+                <label for="status">Estado:</label>
+                <input type="text" id="status" value="true" name="status" readonly>
+            </div>
 
-            <label for="category">Categoría:</label>
-            <input type="text" id="category" name="category" required>
-
+            <div class="input-group">
+                <label for="category">Categoría:</label>
+                <input type="text" id="category" name="category" required>
+            </div>
+            
             <button type="submit">Agregar producto</button>
         </form>
     </div>
@@ -45,4 +61,3 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/index.js"></script>
 <script src="/js/chat.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

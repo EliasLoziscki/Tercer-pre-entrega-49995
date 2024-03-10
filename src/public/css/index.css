@@ -4,38 +4,31 @@
     box-sizing: border-box;
 }
 
-body{
+body {
     background-color: rgb(54, 54, 54);
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 1.5;
+    font: 400 16px/1.5 'Roboto', sans-serif;
     color: #d1d3d6;
-    margin: 20px;
+    margin: 60px 20px 60px 20px;
 }
 
-.contenedor_realtime {
+.main {
+    margin-top: 60px;
+}
+
+.contenedor_realtime, .product-card-container, nav ul {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
 }
 
-.div1, .div2 {
+.div1, .div2, form#addProductForm {
     width: 45%;
 }
 
-@media (max-width: 768px) {
-    .div1, .div2 {
-        width: 100%;
-    }
-}
-
 form#addProductForm {
-    display: flex;
     flex-direction: column;
     justify-content:right;
     gap: 5px;
-    width: 300px;
     margin: 0;
 }
 
@@ -43,36 +36,33 @@ form#addProductForm label {
     font-weight: bold;
 }
 
-form#addProductForm input {
+form#addProductForm input, form#addProductForm button {
     padding: 5px;
     border-radius: 5px;
     border: 1px solid #ccc;
 }
 
 form#addProductForm button {
-    padding: 10px;
-    border-radius: 5px;
     border: none;
     background-color: #007BFF;
     color: white;
     cursor: pointer;
 }
 
-.navPage{
+.input-group {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 5px;
+}
+
+.navPage {
     padding-top: 50px;
 }
 
 a:-webkit-any-link {
     color: rgb(207, 155, 250);
-    font-size: 1.1rem ;
-    font-weight: 550;
+    font: 550 1.1rem;
     text-decoration: none;
-}
-
-.product-card-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
 }
 
 .product-card {
@@ -96,16 +86,11 @@ a:-webkit-any-link {
     font-weight: bold;
 }
 
-.product-description {
+.product-description, .product-stock, .product-price, .add-to-cart-button, button, input[type=submit] {
     margin-top: 10px;
-}
-
-.product-stock, .product-price {
-    margin-top: 5px;
 }
 
 .add-to-cart-button, button, input[type=submit] {
-    margin-top: 10px;
     background-color: #008CBA;
     color: white;
     padding: 10px 24px;
@@ -120,4 +105,136 @@ a:-webkit-any-link {
 .add-to-cart-button:hover {
     background-color: white;
     color: black;
+}
+
+nav {
+    display: flex;
+    justify-content: flex-end;
+    background-color: rgb(54, 54, 54);
+    padding: 10px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    float: right;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    font-size: 20px;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    display: inline-block;
+    margin-right: 10px;
+    padding-right: 15px;
+}
+
+a {
+    text-decoration: none;
+    color: #fff; /* Cambia esto a un color que contraste con el fondo */
+    padding: 0px;
+}
+
+a:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+ul.product-list li {
+    display: block;
+    padding-top: 25px;
+}
+
+.nav-toggle {
+    width: 25px;
+    height: 20px;
+    display: none;
+    cursor: pointer;
+}
+
+.nav-toggle .hamburger {
+    width: 30px;
+    height: 2px;
+    background-color: #333;
+    position: relative;
+}
+
+.nav-toggle .hamburger::before,
+.nav-toggle .hamburger::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #333;
+}
+
+.nav-toggle .hamburger::before {
+    transform: translateY(-10px);
+}
+
+.nav-toggle .hamburger::after {
+    transform: translateY(10px);
+}
+
+.total {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #007BFF;
+}
+
+@media (max-width: 600px) {
+    .div1, .div2 {
+        width: 100%;
+    }
+
+    nav {
+        justify-content: flex-start;
+    }
+
+    nav ul {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav li {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .nav-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #a0a19c;
+    }
+
+    .nav-menu {
+        display: none;
+        width: 100%;
+    }
+
+    .nav-menu li {
+        display: block;
+    }
+}
+
+.nav-menu.active {
+    display: block;
+    position: absolute;
+    width: 100%;
+    top: 100%;
+    left: 0;
+    background-color: rgb(54, 54, 54);
+    z-index: 101;
+    border: 1px solid #333;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    padding: 5px;
 }

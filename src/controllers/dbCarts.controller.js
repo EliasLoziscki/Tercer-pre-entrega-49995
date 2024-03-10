@@ -1,6 +1,4 @@
-import dbCartManager from "../dao/Managers/mongo/cart.mongo.js";
-
-const cartService = new dbCartManager();
+import { cartService } from "../repository/index.js";
 
 const postCreateCarts = async (req, res) => {
   try {

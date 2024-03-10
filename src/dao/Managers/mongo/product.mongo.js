@@ -35,6 +35,16 @@ class dbProductManager {
     }
   }
 
+  async getByProduct (params) {
+    try {
+      const product = await this.productModel.findOne(params);
+      return product;
+    } catch (error) {
+      console.error("Error getting product:", error.message);
+      return null;
+    }
+  }
+
   async updateProduct(id, updateProduct) {
     try {
       const product = await this.productModel.findByIdAndUpdate(id, updateProduct, {new: true});

@@ -17,6 +17,7 @@ import { config } from "./config/config.js";
 import cors from "cors";
 import { productsGenerateRouter } from "./routes/productsFaker.routes.js";
 import { addLogger } from "./utils/logger.js";
+import Handlebars from "handlebars";
 
 console.log(config);
 
@@ -57,6 +58,13 @@ const io = new Server(httpServer);
 app.engine("handlebars", engine()); //handlebars como template engine para las vistas html
 app.set("view engine", "handlebars");
 app.set("views", `${__dirname}/views`);
+
+Handlebars.registerHelper('add', function(a, b) {
+  return a + b;
+});
+Handlebars.registerHelper('multiply', function(a, b) {
+  return a * b;
+});
 
 app.use(express.static(`${__dirname}/public`)); //Para poder usar los archivos estáticos de la carpeta public (css y js)
 

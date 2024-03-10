@@ -1,14 +1,17 @@
 <div>
     <h1>Carrito de compras</h1>
     <h2>Carrito: {{cart._id}}</h2>
-    <ul>
+    <ul class="product-list">
         {{#each cart.products}}
             <li>
                 <h3>Producto: {{this.product.title}}</h3>
                 <p>Descripción: {{this.product.description}}</p>
                 <p>Precio: {{this.product.price}}</p>
                 <p>Cantidad: {{this.quantity}}</p>
+                <p class="subtotal" data-subtotal-quantity="{{this.quantity}}" data-subtotal-price="{{this.product.price}}">Subtotal: {{multiply this.product.price this.quantity}}</p>
+                <button class="remove-from-cart" data-product-id="{{this.product._id}}" data-cart-id="{{../cart._id}}">Remover del carrito</button>
             </li>
         {{/each}}
     </ul>
+    <p id="total" class="total">Carrito vació</p>
 </div>

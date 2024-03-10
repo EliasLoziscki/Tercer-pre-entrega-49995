@@ -22,7 +22,15 @@ class dbCartManager {
     } catch (error) {
         throw new Error(`Error al obtener el carrito: ${error.message}`);
     }
-}
+  }
+
+  async getByCart (params) {
+    try {
+      return await this.cartModel.findOne(params);
+    } catch (error) {
+      throw new Error(`Error al obtener el carrito: ${error.message}`);
+    }
+  };
 
   async createCart () {
     try {
@@ -36,38 +44,32 @@ class dbCartManager {
 
   async addProductToCart (cid, pid, quantity = 1) {
     try {
-      const cart = await this.cartModel.findById(cid);
-      if (!cart) {
-        throw new Error(`El carrito con el id ${cid} no existe`);
-      }
-      const product = await this.productModel.findById(pid);
-      if (!product) {
-        throw new Error(`El producto con el id ${pid} no existe`);
-      }
+        const cart = await this.cartModel.findById(cid);
+        if (!cart) {
+            throw new Error(`El carrito con el id ${cid} no existe`);
+        }
+        const product = await this.productModel.findById(pid);
+        if (!product) {
+            throw new Error(`El producto con el id ${pid} no existe`);
+        }
 
-      let productsInCart = cart.products;
+        const productInCart = cart.products.find(p => p.product.toString() === pid);
 
-      const indexProduct = productsInCart.findIndex(
-        (product) => product.product == pid
-      );
+        if (productInCart) {
 
-      if (indexProduct == -1) {
-        const newProduct = {
-          product: pid,
-          quantity: quantity,
-        };
-        cart.products.push(newProduct);
-      } else {
-        cart.products[indexProduct].quantity += quantity;
-      }
+            productInCart.quantity += parseInt(quantity);
+        } else {
 
-      await cart.save();
+            cart.products.push({ product: pid, quantity: parseInt(quantity) });
+        }
 
-      return cart;
+        await cart.save();
+
+        return cart;
     } catch (error) {
-      throw new Error(`Error al agregar el producto al carrito: ${error.message}`);
+        throw new Error(`Error al agregar el producto al carrito: ${error.message}`);
     }
-  };
+  }
 
   async deleteCart (cid) {
     try {

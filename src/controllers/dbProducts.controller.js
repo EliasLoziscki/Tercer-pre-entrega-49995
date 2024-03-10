@@ -1,11 +1,8 @@
-import dbProductManager from "../dao/Managers/mongo/product.mongo.js";
-import { generateProducts } from "../utils.js";
-
-const productServicio = new dbProductManager();
+import { productService } from "../repository/index.js";
 
 const getProductsAll = async (req, res) => {
   try {
-    const product = await productServicio.getProducts();
+    const product = await productService.getProducts();
 
     res.send({
       status: "success",
@@ -24,7 +21,7 @@ const getProductsAll = async (req, res) => {
 const postCreateProduct = async (req, res) => {
   const product = req.body;
 
-  await productServicio.createProduct(product);
+  await productService.createProduct(product);
 
   res.send({
     status: "success",
@@ -36,7 +33,7 @@ const postCreateProduct = async (req, res) => {
 const ProductById = async (req, res) => {
   const pid = req.params.pid;
   try {
-    const product = await productServicio.getProductById(pid);
+    const product = await productService.getProductById(pid);
     res.send({
       status: "success",
       msg: `Ruta GET ID PRODUCTS con ID: ${pid}`,
@@ -55,7 +52,7 @@ const updateProductById = async (req, res) => {
   try {
     const pid = req.params.pid;
     const updatedProduct = req.body;
-    await productServicio.updateProduct(pid, updatedProduct);
+    await productService.updateProduct(pid, updatedProduct);
     res.send({
       status: "success",
       msg: `Ruta PUT de PRODUCTS con ID: ${pid}`,
@@ -72,7 +69,7 @@ const updateProductById = async (req, res) => {
 const deleteProductById = async (req, res) => {
   try {
     const pid = req.params.pid;
-    const product = await productServicio.getProductById(pid);
+    const product = await productService.getProductById(pid);
     const productTitle = product.title;
     await productServicio.deleteProduct(pid);
     res.send({
