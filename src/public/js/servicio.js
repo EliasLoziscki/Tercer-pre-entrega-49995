@@ -21,7 +21,11 @@ document.addEventListener('DOMContentLoaded', function() {
                                 text: toastMessage,
                                 duration: 3000
                             }).showToast();
-                            if (method === 'DELETE') location.reload();
+                            if (method === 'DELETE') {
+                                setTimeout(function() {
+                                    location.reload();
+                                }, 800);
+                            }
                         }
                     })
                     .then(response => response.json())
@@ -58,7 +62,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
                             text: "Producto eliminado",
                             duration: 3000
                         }).showToast();
-                        location.reload();
+                        setTimeout(function() {
+                            location.reload();
+                        }, 800);
                     }
                 })
                 .then(response => response.json())
