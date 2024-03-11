@@ -1,5 +1,5 @@
 import express from "express";
-import { cartByID, getCartsAll, postCreateCarts, postAddProductToCart, updateCartId, updateCartIdByProduct, deleteCartById, deleteProductItCartById } from "../controllers/dbCarts.controller.js";
+import { getCartByID, getCartsAll, postCreateCarts, postAddProductToCart, updateCartId, updateCartIdByProduct, deleteCartById, deleteProductItCartById } from "../controllers/dbCarts.controller.js";
 import { purchase } from "../controllers/ticket.controller.js";
 
 const router = express.Router();
@@ -11,7 +11,7 @@ router.post("/", postCreateCarts);
 router.get("/", getCartsAll);
 
 //Traer un carrito por su id 
-router.get("/:cid", cartByID);
+router.get("/:cid", getCartByID);
 
 //Agregar un producto a un carrito 
 router.post("/:cid/products/:pid", postAddProductToCart);

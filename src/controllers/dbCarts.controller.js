@@ -35,7 +35,7 @@ const getCartsAll = async (req, res) => {
   }
 };
 
-const cartByID = async (req, res) => {
+const getCartByID = async (req, res) => {
   try {
     const cid = req.params.cid;
     const cart = await cartService.getCartByID({ _id: cid });
@@ -153,7 +153,7 @@ const deleteProductItCartById = async (req, res) => {
 export {
   postCreateCarts,
   getCartsAll,
-  cartByID,
+  getCartByID,
   postAddProductToCart,
   updateCartId,
   updateCartIdByProduct,

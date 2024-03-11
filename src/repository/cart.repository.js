@@ -7,7 +7,6 @@ export class CartRepository {
 
     async getCarts() {
         const cart = await this.cartDao.getCarts();
-        console.log(cart)
         return cart;
     }
 
@@ -25,8 +24,7 @@ export class CartRepository {
     
     async getCartByID(id) {
         const cart = await this.cartDao.getCartByID(id);
-        const cartDtoFront = new GetCartDto(cart);
-        return cartDtoFront;
+        return cart;
     }
 
     async addProductToCart(cid, pid, quantity) {
