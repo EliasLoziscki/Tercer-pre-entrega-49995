@@ -68,6 +68,29 @@ class dbProductManager {
       return err;
     }
   }
-}
+
+  async getStock(productId) {
+    try {
+      const product = await this.productModel.findById(productId);
+      return product.stock;
+    } catch (error) {
+      console.error("Error getting stock:", error.message);
+      return null;
+    }
+  }
+
+  async updateStock(productId, stock) {
+    try {
+      const product = await this.productModel.findByIdAndUpdate(productId, { stock: stock }, { new: true });
+      return product
+        ? "Stock actualizado correctamente."
+        : "Product not found";
+    } catch (error) {
+      console.error("Error updating stock:", error.message);
+      return error;
+    }
+  }
+};
+
 
 export default dbProductManager;

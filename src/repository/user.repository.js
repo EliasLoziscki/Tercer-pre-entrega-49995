@@ -7,7 +7,6 @@ export class UserRepository {
 
     async getUsers() {
         const users = await this.userDao.get();
-        console.log(users)
         return users;
     }
 

@@ -9,7 +9,7 @@ class dbCartManager {
 
   async getCarts () {
     try {
-      return await this.cartModel.find();
+      return await this.cartModel.find().lean();
     } catch (error) {
       throw new Error(`Error al obtener los carritos: ${error.message}`);
     }
@@ -26,7 +26,7 @@ class dbCartManager {
 
   async getByCart (params) {
     try {
-      return await this.cartModel.findOne(params);
+      return await this.cartModel.findOne(params).lean();
     } catch (error) {
       throw new Error(`Error al obtener el carrito: ${error.message}`);
     }

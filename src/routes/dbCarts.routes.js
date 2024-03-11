@@ -1,5 +1,6 @@
 import express from "express";
 import { cartByID, getCartsAll, postCreateCarts, postAddProductToCart, updateCartId, updateCartIdByProduct, deleteCartById, deleteProductItCartById } from "../controllers/dbCarts.controller.js";
+import { purchase } from "../controllers/ticket.controller.js";
 
 const router = express.Router();
 
@@ -26,5 +27,8 @@ router.delete("/:cid", deleteCartById);
 
 //Eliminar un producto de un carrito por su id
 router.delete("/:cid/products/:pid", deleteProductItCartById);
+
+//permite finalizar el proceso de compra de dicho carrito
+router.put("/:cid/purchase", purchase);
 
 export { router as dbCartRouter };

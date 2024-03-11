@@ -37,4 +37,14 @@ export class ProductRepository {
         return productDeleted;
     }
 
+    async getStock(id) {
+        const stock = await this.productDao.getStock(id);
+        return stock;
+    }
+
+    async updateStock(id, stock) {
+        const stockUpdated = await this.productDao.updateStock(id, stock);
+        return stockUpdated;
+    }
+
 }

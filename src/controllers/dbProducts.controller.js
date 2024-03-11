@@ -86,10 +86,49 @@ const deleteProductById = async (req, res) => {
   }
 };
 
+const getStock = async (req, res) => {
+  const pid = req.params.pid;
+  try {
+    const stock = await productService.getStock(pid);
+    res.send({
+      status: "success",
+      msg: `Stock del producto con ID: ${pid}`,
+      stock: stock,
+    });
+  } catch (error) {
+    req.logger.error("Error al obtener el stock del producto:", error);
+    res.send({
+      status: "error",
+      msg: "Error al obtener el stock del producto",
+    });
+  }
+};
+
+const updateStock = async (req, res) => {
+  const pid = req.params.pid;
+  const stock = req.body.stock;
+  try {
+    await productService.updateStock(pid, stock);
+    res.send({
+      status: "success",
+      msg: `Stock del producto con ID: ${pid} actualizado`,
+    });
+  } catch (error) {
+    req.logger.error("Error al actualizar el stock del producto:", error);
+    res.send({
+      status: "error",
+      msg: "Error al actualizar el stock del producto",
+    });
+  }
+};
+
+
 export {
   getProductsAll,
   postCreateProduct,
   productById,
   updateProductById,
-  deleteProductById
+  deleteProductById,
+  getStock,
+  updateStock
 };

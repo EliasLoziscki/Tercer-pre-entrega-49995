@@ -134,7 +134,6 @@ const deleteProductItCartById = async (req, res) => {
   try {
     const cid = req.params.cid;
     const pid = req.params.pid;
-
     const cart = await cartService.deleteProductItCart(cid, pid);
 
     res.send({
