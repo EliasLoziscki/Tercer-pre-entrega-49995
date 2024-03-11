@@ -1,5 +1,6 @@
 import express from "express";
 import { cartByID, getCartsAll, postCreateCarts, postAddProductToCart, updateCartId, updateCartIdByProduct, deleteCartById, deleteProductItCartById } from "../controllers/dbCarts.controller.js";
+import { checkRole } from "../middlewares/auth.js";
 
 const router = express.Router();
 
