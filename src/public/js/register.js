@@ -20,6 +20,7 @@ form.addEventListener('submit', e => {
                 toast: true,
                 position:"top-end"
             });
+            window.location.replace('/login');
         } else {
             Swal.fire({
                 title: `Email ya registrado`,
@@ -28,4 +29,5 @@ form.addEventListener('submit', e => {
             });
         }
     }).then(result => result.json()).then(json => console.log(json));
+    
 });

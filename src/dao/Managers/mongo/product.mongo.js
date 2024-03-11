@@ -6,7 +6,7 @@ class dbProductManager {
   }
   async getProducts() {
     try {
-      const products = await this.productModel.find();
+      const products = await this.productModel.find().lean();
       return products;
     } catch (err) {
       console.error(err);
@@ -27,7 +27,7 @@ class dbProductManager {
 
   async getProductById(productId) {
     try {
-      const product = await this.productModel.findById(productId);
+      const product = await this.productModel.findById(productId).lean();
       return product;
     } catch (error) {
       console.error("Error getting product:", error.message);

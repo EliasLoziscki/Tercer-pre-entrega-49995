@@ -28,11 +28,11 @@ router.get("/login", publicAccess, login);//Ruta para mostrar el formulario de l
 
 router.get("/profile", privateAccess, profile);//Ruta para mostrar el perfil del usuario
 
-router.get('/carts/:cid', cartsCid);//Obtiene un carrito por ID y lo muestra en la vista cartId
+router.get('/carts/:cid', privateAccess, cartsCid);//Obtiene un carrito por ID y lo muestra en la vista cartId
 
-router.get('/products', privateAccess, products);//Obtiene todos los productos y los muestra en la vista products con paginación
+router.get('/products', privateAccess, checkRole(["user"]), products);//Obtiene todos los productos y los muestra en la vista products con paginación
 
-router.get('/chat', chat);//Obtiene todos los mensajes y los muestra en la vista chat
+router.get('/chat', checkRole(["user"]), chat);//Obtiene todos los mensajes y los muestra en la vista chat
 
 router.get("/resetPassword", resetPassword);//Ruta para mostrar el formulario de reseteo de contraseña
 

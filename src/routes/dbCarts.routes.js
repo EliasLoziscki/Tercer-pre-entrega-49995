@@ -1,6 +1,5 @@
 import express from "express";
 import { cartByID, getCartsAll, postCreateCarts, postAddProductToCart, updateCartId, updateCartIdByProduct, deleteCartById, deleteProductItCartById } from "../controllers/dbCarts.controller.js";
-import { checkRole } from "../middlewares/auth.js";
 
 const router = express.Router();
 
@@ -8,7 +7,7 @@ const router = express.Router();
 router.post("/", postCreateCarts);
 
 //Traer todos los carritos de la base de datos 
-router.get("/", checkRole(["admin"]), getCartsAll);
+router.get("/", getCartsAll);
 
 //Traer un carrito por su id 
 router.get("/:cid", cartByID);
@@ -23,7 +22,7 @@ router.put("/:cid", updateCartId);
 router.put("/:cid/products/:pid", updateCartIdByProduct);
 
 //Eliminar un carrito por su id
-router.delete("/:cid", checkRole(["admin"]), deleteCartById);
+router.delete("/:cid", deleteCartById);
 
 //Eliminar un producto de un carrito por su id
 router.delete("/:cid/products/:pid", deleteProductItCartById);

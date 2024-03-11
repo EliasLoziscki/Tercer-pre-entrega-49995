@@ -1,13 +1,13 @@
-import dbCartManager from "../dao/Managers/mongo/cart.mongo.js";
 import productModel from "../dao/models/products.model.js";
 import dbMessageManager from "../dao/Managers/mongo/message.mongo.js";
+import { productService } from "../repository/index.js";
+import { cartService } from "../repository/index.js";
 
-const cartManager = new dbCartManager();
 const MessageManager = new dbMessageManager();
 
 const home = async (req, res) => {
   try {
-    const products = await productModel.find().lean();
+    const products = await productService.getProducts();
     res.render("home", { products, style: "index" });
   } catch (error) {
     req.logger.error("Error al obtener productos:", error);
@@ -20,7 +20,7 @@ const home = async (req, res) => {
 
 const realtimeproducts = async (req, res) => {
   try {
-    const products = await productModel.find().lean();
+    const products = await productService.getProducts();
     res.render("realtimeproducts", { products, style: "index" });
   } catch (error) {
     req.logger.error("Error al obtener productos en tiempo real:", error);
@@ -46,7 +46,7 @@ const profile = (req, res) => {
 const cartsCid = async (req, res) => {
   const cid = req.params.cid;
   try {
-    const cart = await cartManager.getCartByID(cid)
+    const cart = await cartService.getCartByID(cid);
     if (!cart) {
       throw new Error(`No se encontró el carrito con ID: ${cid}`);
     }
