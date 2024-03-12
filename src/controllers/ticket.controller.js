@@ -1,6 +1,7 @@
 import { cartService, productService, ticketService } from "../repository/index.js";
 import moment from "moment";
 
+
 const purchase = async (req, res) => {
     try {
         const cid = req.params.cid;
@@ -38,9 +39,9 @@ const purchase = async (req, res) => {
             purchaser: req.session.user.email,
         };
 
+        console.log('ticket: ', newTicket)
         const ticket = await ticketService.create(newTicket);
         await cartService.updateCart(cid, { products: [] });
-
         res.send({
             status: "success",
             msg: "Compra realizada con éxito",

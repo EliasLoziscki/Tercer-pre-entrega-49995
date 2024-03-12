@@ -1,9 +1,8 @@
-import dbCartManager from "../dao/Managers/mongo/cart.mongo.js";
 import productModel from "../dao/models/products.model.js";
 import { productService } from "../repository/index.js";
 import { cartService } from "../repository/index.js";
+import { message } from "../controllers/messages.controller.js";
 
-const cartManager = new dbCartManager();
 
 const home = async (req, res) => {
   try {
@@ -96,8 +95,8 @@ const products = async (req, res) => {
 };
 
 const chat = async (req, res) => {
-  const message = await MessageManager.getMessages();
-  res.render("chat", { message });
+  const messages = await message.getMessages();
+  res.render("chat", { messages });
 };
 
 const resetPassword = (req, res) => {
