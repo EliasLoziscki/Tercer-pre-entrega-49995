@@ -96,7 +96,7 @@ const products = async (req, res) => {
 
 const chat = async (req, res) => {
   const messages = await message.getMessages();
-  res.render("chat", { messages });
+  res.render("chat", { messages, style: "index" });
 };
 
 const resetPassword = (req, res) => {

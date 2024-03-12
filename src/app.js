@@ -101,17 +101,17 @@ io.on("connection", (socket) => {
     }
   });
   socket.on("chat-message", async (data) => {
-    messages.push(data);
-    io.emit("messages", messages);
     try {
-      await message.createMessage(data.email, data.message);
+        const newMessage = await message.createMessage(data.email, data.message);
+        messages.push(newMessage);
+        io.emit("messages", messages);
     } catch (error) {
-      console.error(
-        "Error al guardar el mensaje en la base de datos:",
-        error.message
-      );
+        console.error(
+            "Error al guardar el mensaje en la base de datos:",
+            error.message
+        );
     }
-  });
+});
 
   socket.on("new-user", async (email) => {
     socket.broadcast.emit("new-user", email);

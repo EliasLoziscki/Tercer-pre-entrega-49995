@@ -20,8 +20,7 @@ Swal.fire({
 
 const chatInput = document.getElementById("chat-input");
 
-chatInput.addEventListener("keyup", (ev)=>{
-
+chatInput.addEventListener("keyup", (ev) => {
     if(ev.key === "Enter"){
         const inputMessage = chatInput.value;
         if(inputMessage.trim().length > 0){
@@ -34,14 +33,23 @@ chatInput.addEventListener("keyup", (ev)=>{
 
 const messagesPanel = document.getElementById("messages-panel");
 
-socket.on("messages", (data)=>{
-    let message = "";
+let messages = [];
 
-    data.forEach((m) => {
-        message += `<b>${m.email}:</b>${m.message}</br>`
+socket.on("messages", (data) => {
+    messages = data.slice(-100).reverse().map(m => {
+        const timestamp = new Date(m.timestamp);
+        const timestampString = isNaN(timestamp.getTime()) ? "Invalid Date" : timestamp.toLocaleString();
+        return `<b>${m.email}:</b>${m.message} <i>${timestampString}</i></br>`;
     });
-    messagesPanel.innerHTML = message;
-})
+    messagesPanel.innerHTML = messages.join(''); // Actualiza el panel de mensajes con todos los mensajes
+});
+
+socket.on("new-message", (m) => {
+    const timestamp = new Date(m.timestamp);
+    const timestampString = isNaN(timestamp.getTime()) ? "Invalid Date" : timestamp.toLocaleString();
+    messages = [`<b>${m.email}:</b>${m.message} <i>${timestampString}</i></br>`, ...messages];
+    messagesPanel.innerHTML = messages.join(''); // Actualiza el panel de mensajes con el nuevo mensaje
+});
 
 socket.on("new-user",(email)=>{
     Swal.fire({

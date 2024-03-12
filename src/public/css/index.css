@@ -221,6 +221,14 @@ ul.product-list li {
     align-self: center;
 }
 
+#messages-panel {
+    width: 600px;
+    height: 300px;
+    overflow-y: auto; 
+    border: 1px solid #ccc;
+    padding: 10px; 
+}
+
 @media (max-width: 600px) {
     .div1, .div2 {
         width: 100%;

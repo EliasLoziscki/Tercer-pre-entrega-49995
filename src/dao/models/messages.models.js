@@ -8,7 +8,11 @@ const messagesSchema = new mongoose.Schema({
         required: true},
     message: {
         type: String, 
-        required: true}
+        required: true},
+    timestamp: {
+        type: Date,
+        default: Date.now
+    }
 });
 
 const messagesModel = mongoose.model(collection, messagesSchema);
