@@ -66,3 +66,26 @@ document.addEventListener('DOMContentLoaded', (event) => {
         });
     });
 });
+
+//finaliza compra
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    const purchase = document.querySelectorAll('.purchase');
+    purchase.forEach((button) => {
+        button.addEventListener('click', function() {
+            const cartId = this.getAttribute('data-cart-id');
+            fetch(`/api/carts/${cartId}/purchase`, { method: 'PUT' })
+            .then(data => {
+                    if(data.ok) {
+                        Toastify({
+                            text: "Compra realizada",
+                            duration: 3000
+                        }).showToast();
+                        location.reload();
+                    }
+                })
+                .then(response => response.json())
+                .catch(error => console.log(error));
+        });
+    });
+});

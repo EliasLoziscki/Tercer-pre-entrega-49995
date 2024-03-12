@@ -30,7 +30,7 @@ const postCreateProduct = async (req, res) => {
   });
 };
 
-const productById = async (req, res) => {
+const getProductById = async (req, res) => {
   const pid = req.params.pid;
   try {
     const product = await productService.getProductById(pid);
@@ -126,7 +126,7 @@ const updateStock = async (req, res) => {
 export {
   getProductsAll,
   postCreateProduct,
-  productById,
+  getProductById,
   updateProductById,
   deleteProductById,
   getStock,

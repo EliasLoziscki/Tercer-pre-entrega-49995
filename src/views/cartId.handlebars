@@ -13,5 +13,9 @@
             </li>
         {{/each}}
     </ul>
-    <p id="total" class="total">Carrito vació</p>
+    {{!-- finalizar compra --}}
+    <div class="total">
+        <button class="purchase" data-cart-id="{{cart._id}}">Finalizar compra</button>
+        <p id="total" class="total">Carrito vació</p>
+    </div>
 </div>
